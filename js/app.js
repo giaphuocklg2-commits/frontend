@@ -106,6 +106,23 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => toast.classList.add('hidden'), 2000);
   };
 
+  // ═══ Open Link ═══
+  function isMobile() {
+    return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  }
+
+  // Set button text based on device
+  const openBtnText = document.getElementById('openBtnText');
+  if (openBtnText) {
+    openBtnText.textContent = isMobile() ? 'Mở app' : 'Mở link';
+  }
+
+  window.openLink = function (url) {
+    const link = url || shortUrlEl.textContent;
+    if (!link) return;
+    window.open(link, '_blank');
+  };
+
   // ═══ Status ═══
   function updateStatus(status) {
     const map = {
@@ -142,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
     resultSection.classList.remove('hidden');
     errorSection.classList.add('hidden');
     resetConvertBtn();
+    // Auto-open link
+    openLink(shortUrl);
   }
 
   function showError(msg) {

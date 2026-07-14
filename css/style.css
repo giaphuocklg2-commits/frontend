@@ -88,6 +88,23 @@
   color: white;
 }
 
+.btn-green {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-green:hover {
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-green:active {
+  transform: translateY(0) scale(0.95);
+}
+
 button:disabled {
   opacity: 0.4;
   cursor: not-allowed;

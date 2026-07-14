@@ -117,7 +117,11 @@
               <div class="flex-1 bg-black/30 rounded-lg px-3 py-2.5 border border-white/5">
                 <p id="shortUrl" class="text-sm text-shopee-400 font-semibold break-all"></p>
               </div>
-              <button onclick="copyToClipboard()" class="btn-ghost px-4 rounded-lg flex items-center gap-1.5 text-xs font-medium active:scale-95">
+              <button onclick="openLink()" class="btn-green px-3.5 rounded-lg flex items-center gap-1.5 text-xs font-medium active:scale-95" title="Mở link">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                <span id="openBtnText">Mở link</span>
+              </button>
+              <button onclick="copyToClipboard()" class="btn-ghost px-3.5 rounded-lg flex items-center gap-1.5 text-xs font-medium active:scale-95" title="Copy link">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 Copy
               </button>
