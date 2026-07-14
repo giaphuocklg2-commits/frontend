@@ -186,6 +186,94 @@ document.addEventListener('DOMContentLoaded', () => {
   urlInput.focus();
 
   // ===========================
+  // Report Functions
+  // ===========================
+  window.loadReport = async function () {
+    const loadReportBtn = document.getElementById('loadReportBtn');
+    const reportLoading = document.getElementById('reportLoading');
+    const reportError = document.getElementById('reportError');
+    const reportStats = document.getElementById('reportStats');
+    const reportTableContainer = document.getElementById('reportTableContainer');
+    const reportTableBody = document.getElementById('reportTableBody');
+    const reportNoData = document.getElementById('reportNoData');
+
+    loadReportBtn.disabled = true;
+    loadReportBtn.textContent = 'Loading...';
+    reportLoading.classList.remove('hidden');
+    reportError.classList.add('hidden');
+    reportStats.classList.add('hidden');
+    reportTableContainer.classList.add('hidden');
+    reportNoData.classList.add('hidden');
+
+    try {
+      const response = await fetch(`${API_CONFIG.API_BASE_URL}/api/reports/conversion`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to load report');
+      }
+
+      // Show stats
+      if (data.summary) {
+        document.getElementById('statTotalOrders').textContent = data.summary.totalOrders || 0;
+        document.getElementById('statTotalCommission').textContent = formatCurrency(data.summary.totalCommission || 0);
+        document.getElementById('statTotalRevenue').textContent = formatCurrency(data.summary.totalRevenue || 0);
+        reportStats.classList.remove('hidden');
+      }
+
+      // Show table
+      if (data.orders && data.orders.length > 0) {
+        reportTableBody.innerHTML = data.orders.map(order => `
+          <tr class="bg-gray-800/30 hover:bg-gray-800/50 transition-colors">
+            <td class="px-4 py-3 font-medium text-white">${escapeHtml(order.orderId)}</td>
+            <td class="px-4 py-3 text-gray-300">${escapeHtml(order.orderTime)}</td>
+            <td class="px-4 py-3 text-gray-300">${escapeHtml(order.orderValue)}</td>
+            <td class="px-4 py-3 text-green-400 font-medium">${escapeHtml(order.commission)}</td>
+            <td class="px-4 py-3 text-gray-300 max-w-[200px] truncate">${escapeHtml(order.product)}</td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-1 text-xs rounded-full ${getStatusClass(order.status)}">${escapeHtml(order.status)}</span>
+            </td>
+          </tr>
+        `).join('');
+        reportTableContainer.classList.remove('hidden');
+      } else {
+        reportNoData.classList.remove('hidden');
+      }
+    } catch (error) {
+      reportError.classList.remove('hidden');
+      document.getElementById('reportErrorText').textContent = error.message;
+    } finally {
+      loadReportBtn.disabled = false;
+      loadReportBtn.textContent = 'Load Report';
+      reportLoading.classList.add('hidden');
+    }
+  };
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function getStatusClass(status) {
+    if (!status) return 'bg-gray-500/20 text-gray-400';
+    const s = status.toLowerCase();
+    if (s.includes('hoàn thành') || s.includes('completed') || s.includes('success')) {
+      return 'bg-green-500/20 text-green-400';
+    } else if (s.includes('chờ') || s.includes('pending') || s.includes('processing')) {
+      return 'bg-yellow-500/20 text-yellow-400';
+    } else if (s.includes('hủy') || s.includes('cancel') || s.includes('failed')) {
+      return 'bg-red-500/20 text-red-400';
+    }
+    return 'bg-gray-500/20 text-gray-400';
+  }
+
+  // ===========================
   // Shake Animation (CSS-in-JS)
   // ===========================
   const style = document.createElement('style');
