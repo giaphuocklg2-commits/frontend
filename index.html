@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopee Affiliate Pro</title>
+  <title>Shopee Affiliate</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>
     tailwind.config = {
@@ -15,7 +15,7 @@
         extend: {
           fontFamily: { sans: ['Inter', 'sans-serif'] },
           colors: {
-            shopee: { 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c' }
+            shopee: { 400: '#fb923c', 500: '#f97316', 600: '#ea580c' }
           }
         }
       }
@@ -24,304 +24,133 @@
 </head>
 <body class="bg-[#0a0a0f] text-white min-h-screen font-sans antialiased">
 
-  <!-- Background -->
-  <div class="fixed inset-0 pointer-events-none z-0">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-shopee-500/[0.03] rounded-full blur-[100px]"></div>
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:64px_64px] opacity-30"></div>
-  </div>
-
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-6">
+  <div class="max-w-2xl mx-auto px-4 py-10">
 
     <!-- Header -->
-    <header class="flex items-center justify-between mb-6">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-shopee-400 to-shopee-600 flex items-center justify-center font-bold text-sm shadow-lg shadow-shopee-500/20">S</div>
-        <div>
-          <h1 class="font-bold text-sm leading-tight">Shopee <span class="text-shopee-400">Affiliate</span> <span class="text-slate-500 font-medium text-xs">Pro</span></h1>
-          <p class="text-[10px] text-slate-600 leading-tight">Automation Dashboard</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <a href="https://zalo.me/0567810709" target="_blank" class="px-3 py-1.5 text-[11px] font-medium bg-blue-500/10 text-blue-400 rounded-lg border border-blue-500/15 hover:bg-blue-500/15 transition-all">
-          <span class="flex items-center gap-1.5">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-            Zalo
-          </span>
-        </a>
-        <a href="https://www.facebook.com/HGP117" target="_blank" class="px-3 py-1.5 text-[11px] font-medium bg-violet-500/10 text-violet-400 rounded-lg border border-violet-500/15 hover:bg-violet-500/15 transition-all">
-          <span class="flex items-center gap-1.5">
-            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </span>
-        </a>
-      </div>
+    <header class="text-center mb-10">
+      <h1 class="text-lg font-bold">Shopee <span class="text-shopee-400">Affiliate</span></h1>
+      <p class="text-xs text-slate-500 mt-1">Dán link Shopee, nhận link tiếp thị</p>
     </header>
 
-    <!-- Bento Grid -->
-    <div class="grid grid-cols-12 gap-4">
+    <!-- Converter -->
+    <div class="card rounded-2xl p-5 mb-4">
+      <div class="flex gap-3">
+        <input
+          type="url"
+          id="urlInput"
+          placeholder="Dán link Shopee vào đây..."
+          class="flex-1 input-field rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none"
+        />
+        <button
+          id="convertBtn"
+          onclick="convertLink()"
+          class="btn-orange px-5 py-3 rounded-xl text-sm font-semibold whitespace-nowrap"
+        >
+          Chuyển Đổi
+        </button>
+      </div>
 
-      <!-- Converter -->
-      <div class="col-span-12 lg:col-span-8 card">
-        <div class="flex items-center gap-3 mb-5">
-          <div class="w-9 h-9 rounded-xl bg-shopee-500/10 border border-shopee-500/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-shopee-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-          </div>
-          <div>
-            <h2 class="font-semibold text-sm">Link Converter</h2>
-            <p class="text-[11px] text-slate-500">Paste Shopee URL, convert to affiliate link</p>
-          </div>
+      <!-- Status -->
+      <div id="statusSection" class="mt-4 hidden">
+        <div class="flex items-center gap-2">
+          <div id="statusIcon" class="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+          <span id="statusText" class="text-xs text-slate-400">Đang chờ...</span>
         </div>
-
-        <div class="flex gap-3">
-          <input
-            type="url"
-            id="urlInput"
-            placeholder="https://shopee.vn/..."
-            class="flex-1 input-field rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none"
-          />
-          <button
-            id="convertBtn"
-            onclick="convertLink()"
-            class="btn-orange px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap"
-          >
-            <span class="flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-              Convert
-            </span>
-          </button>
-        </div>
-
-        <!-- Status -->
-        <div id="statusSection" class="mt-5 hidden">
-          <div class="flex items-center gap-2.5 mb-2.5">
-            <div id="statusIcon" class="w-2 h-2 rounded-full bg-slate-500"></div>
-            <span id="statusText" class="text-xs font-medium text-slate-400">Waiting...</span>
-          </div>
-          <div class="w-full bg-white/5 rounded-full h-1 overflow-hidden">
-            <div id="progressBar" class="h-full rounded-full transition-all duration-500 bg-shopee-500" style="width: 0%"></div>
-          </div>
-        </div>
-
-        <!-- Spinner -->
-        <div id="loadingAnimation" class="hidden mt-5 flex justify-center py-3">
-          <div class="spinner"><div></div><div></div><div></div><div></div></div>
-        </div>
-
-        <!-- Result -->
-        <div id="resultSection" class="hidden mt-5">
-          <div class="inner-card rounded-xl p-4">
-            <p class="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Original</p>
-            <p id="originalUrl" class="text-xs text-slate-400 break-all mb-4"></p>
-            <p class="text-[10px] text-shopee-400/70 uppercase tracking-wider mb-1">Affiliate Link</p>
-            <div class="flex items-stretch gap-2">
-              <div class="flex-1 bg-black/30 rounded-lg px-3 py-2.5 border border-white/5">
-                <p id="shortUrl" class="text-sm text-shopee-400 font-semibold break-all"></p>
-              </div>
-              <button onclick="openLink()" class="btn-green px-3.5 rounded-lg flex items-center gap-1.5 text-xs font-medium active:scale-95" title="Mở link">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                <span id="openBtnText">Mở link</span>
-              </button>
-              <button onclick="copyToClipboard()" class="btn-ghost px-3.5 rounded-lg flex items-center gap-1.5 text-xs font-medium active:scale-95" title="Copy link">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                Copy
-              </button>
-            </div>
-          </div>
-          <div id="toast" class="hidden mt-3 flex justify-center">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-              Copied
-            </span>
-          </div>
-        </div>
-
-        <!-- Error -->
-        <div id="errorSection" class="hidden mt-5">
-          <div class="rounded-xl p-3.5 border border-red-500/20 bg-red-500/5 flex items-center gap-2.5">
-            <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-            <p id="errorText" class="text-xs text-red-400"></p>
-          </div>
+        <div class="w-full bg-white/5 rounded-full h-1 mt-2 overflow-hidden">
+          <div id="progressBar" class="h-full rounded-full transition-all duration-500 bg-shopee-500" style="width: 0%"></div>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="col-span-12 lg:col-span-4 card">
-        <div class="flex items-center gap-2 mb-5">
-          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-          </div>
-          <h2 class="font-semibold text-sm">Overview</h2>
-        </div>
-
-        <!-- Stats -->
-        <div id="reportStats" class="hidden space-y-3">
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] text-slate-500 uppercase tracking-wider">Đơn hàng</span>
-              <div class="w-6 h-6 rounded-md bg-shopee-500/10 flex items-center justify-center">
-                <svg class="w-3 h-3 text-shopee-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-              </div>
-            </div>
-            <p class="text-2xl font-bold text-shopee-400" id="statTotalOrders">0</p>
-          </div>
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] text-slate-500 uppercase tracking-wider">Hoa hồng</span>
-              <div class="w-6 h-6 rounded-md bg-emerald-500/10 flex items-center justify-center">
-                <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              </div>
-            </div>
-            <p class="text-2xl font-bold text-emerald-400" id="statTotalCommission">0 ₫</p>
-          </div>
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] text-slate-500 uppercase tracking-wider">Doanh thu</span>
-              <div class="w-6 h-6 rounded-md bg-violet-500/10 flex items-center justify-center">
-                <svg class="w-3 h-3 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-              </div>
-            </div>
-            <p class="text-2xl font-bold text-violet-400" id="statTotalRevenue">0 ₫</p>
+      <!-- Result -->
+      <div id="resultSection" class="hidden mt-4">
+        <div class="inner-card rounded-xl p-4">
+          <p id="shortUrl" class="text-sm text-shopee-400 font-semibold break-all mb-3"></p>
+          <div class="flex gap-2">
+            <button onclick="openLink()" class="btn-green px-4 py-2 rounded-lg text-xs font-medium flex-1">
+              <span id="openBtnText">Mở link</span>
+            </button>
+            <button onclick="copyToClipboard()" class="btn-ghost px-4 py-2 rounded-lg text-xs font-medium flex-1">
+              Copy
+            </button>
           </div>
         </div>
-
-        <!-- Stats Skeleton -->
-        <div id="statsSkeleton" class="hidden space-y-3">
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-3">
-              <div class="skeleton w-16 h-2.5"></div>
-              <div class="skeleton w-6 h-6 rounded-md"></div>
-            </div>
-            <div class="skeleton w-20 h-7"></div>
-          </div>
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-3">
-              <div class="skeleton w-14 h-2.5"></div>
-              <div class="skeleton w-6 h-6 rounded-md"></div>
-            </div>
-            <div class="skeleton w-24 h-7"></div>
-          </div>
-          <div class="inner-card rounded-xl p-4">
-            <div class="flex items-center justify-between mb-3">
-              <div class="skeleton w-16 h-2.5"></div>
-              <div class="skeleton w-6 h-6 rounded-md"></div>
-            </div>
-            <div class="skeleton w-18 h-7"></div>
-          </div>
-        </div>
-
-        <!-- Empty -->
-        <div id="statsEmpty" class="flex flex-col items-center justify-center py-8 text-center">
-          <div class="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mb-3">
-            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
-          </div>
-          <p class="text-slate-600 text-xs">Click Load to view report</p>
+        <div id="toast" class="hidden mt-2 text-center">
+          <span class="text-emerald-400 text-xs">Đã copy</span>
         </div>
       </div>
 
-      <!-- Orders Table -->
-      <div class="col-span-12 card">
-        <div class="flex items-center justify-between mb-5">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
-              <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-            </div>
-            <div>
-              <h2 class="font-semibold text-sm">Orders</h2>
-              <p class="text-[11px] text-slate-500">Conversion report data</p>
-            </div>
-          </div>
-          <button
-            id="loadReportBtn"
-            onclick="loadReport()"
-            class="btn-violet px-5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 active:scale-[0.97]"
-          >
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            Load Report
-          </button>
-        </div>
-
-        <!-- Error -->
-        <div id="reportError" class="hidden mb-4">
-          <div class="rounded-xl p-3.5 border border-red-500/20 bg-red-500/5 flex items-center gap-2.5">
-            <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
-            <p id="reportErrorText" class="text-xs text-red-400"></p>
-          </div>
-        </div>
-
-        <!-- Table Skeleton -->
-        <div id="tableSkeleton" class="hidden space-y-3">
-          <div class="flex gap-4 px-4 py-3">
-            <div class="skeleton h-2.5 flex-1"></div>
-            <div class="skeleton h-2.5 flex-1"></div>
-            <div class="skeleton h-2.5 flex-1"></div>
-            <div class="skeleton h-2.5 flex-1"></div>
-            <div class="skeleton h-2.5 flex-1"></div>
-            <div class="skeleton h-2.5 flex-1"></div>
-          </div>
-          <div class="flex gap-4 px-4 py-4 border-t border-white/5">
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-          </div>
-          <div class="flex gap-4 px-4 py-4 border-t border-white/5">
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-          </div>
-          <div class="flex gap-4 px-4 py-4 border-t border-white/5">
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-            <div class="skeleton h-3 flex-1"></div>
-          </div>
-        </div>
-
-        <!-- Table -->
-        <div id="reportTableContainer" class="hidden overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-t border-white/5">
-                <th class="px-6 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Mã đơn</th>
-                <th class="px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Thời gian</th>
-                <th class="px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Giá trị</th>
-                <th class="px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Hoa hồng</th>
-                <th class="px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Sản phẩm</th>
-                <th class="px-4 py-3 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody id="reportTableBody" class="divide-y divide-white/[0.03]"></tbody>
-          </table>
-        </div>
-
-        <!-- No Data -->
-        <div id="reportNoData" class="hidden">
-          <div class="flex flex-col items-center justify-center py-12 text-center">
-            <div class="w-14 h-14 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mb-3">
-              <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
-            </div>
-            <p class="text-slate-500 text-sm font-medium">No orders found</p>
-            <p class="text-slate-600 text-xs mt-1">Click "Load Report" to fetch data</p>
-          </div>
-        </div>
+      <!-- Error -->
+      <div id="errorSection" class="hidden mt-4">
+        <p id="errorText" class="text-xs text-red-400 bg-red-500/10 rounded-lg px-3 py-2"></p>
       </div>
-
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-8 text-center">
-      <p class="text-slate-600 text-[10px]">
-        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500/60 mr-1.5 align-middle"></span>
-        System Online &middot; Playwright Automation
-      </p>
-    </footer>
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-3 mb-4">
+      <div class="card rounded-xl p-4 text-center">
+        <p class="text-[10px] text-slate-500 mb-1">Đơn hàng</p>
+        <p class="text-lg font-bold text-shopee-400" id="statTotalOrders">0</p>
+      </div>
+      <div class="card rounded-xl p-4 text-center">
+        <p class="text-[10px] text-slate-500 mb-1">Hoa hồng</p>
+        <p class="text-lg font-bold text-emerald-400" id="statTotalCommission">0₫</p>
+      </div>
+      <div class="card rounded-xl p-4 text-center">
+        <p class="text-[10px] text-slate-500 mb-1">Doanh thu</p>
+        <p class="text-lg font-bold text-violet-400" id="statTotalRevenue">0₫</p>
+      </div>
+    </div>
+
+    <!-- Orders -->
+    <div class="card rounded-2xl p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-sm font-semibold">Đơn hàng</h2>
+        <button
+          id="loadReportBtn"
+          onclick="loadReport()"
+          class="btn-violet px-4 py-2 rounded-lg text-xs font-medium"
+        >
+          Tải báo cáo
+        </button>
+      </div>
+
+      <div id="reportError" class="hidden mb-3">
+        <p id="reportErrorText" class="text-xs text-red-400 bg-red-500/10 rounded-lg px-3 py-2"></p>
+      </div>
+
+      <!-- Empty -->
+      <div id="reportEmpty" class="text-center py-8">
+        <p class="text-slate-600 text-xs">Nhấn "Tải báo cáo" để xem dữ liệu</p>
+      </div>
+
+      <!-- Loading -->
+      <div id="reportLoading" class="hidden text-center py-8">
+        <div class="spinner"><div></div><div></div><div></div><div></div></div>
+      </div>
+
+      <!-- Table -->
+      <div id="reportTableContainer" class="hidden overflow-x-auto">
+        <table class="w-full text-xs">
+          <thead>
+            <tr class="border-t border-white/5">
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Mã đơn</th>
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Thời gian</th>
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Giá trị</th>
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Hoa hồng</th>
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Sản phẩm</th>
+              <th class="px-3 py-2 text-left text-slate-500 font-medium">Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="reportTableBody" class="divide-y divide-white/[0.03]"></tbody>
+        </table>
+      </div>
+
+      <!-- No Data -->
+      <div id="reportNoData" class="hidden text-center py-8">
+        <p class="text-slate-500 text-xs">Không có đơn hàng</p>
+      </div>
+    </div>
+
   </div>
 
   <script src="js/config.js"></script>
