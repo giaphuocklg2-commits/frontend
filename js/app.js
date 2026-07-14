@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.convertLink = async function () {
     const url = urlInput.value.trim();
     if (!url) { shakeInput(); return; }
-    if (!url.includes('shopee.vn') && !url.includes('s.shopee.vn')) {
+    if (!/shopee\.vn|s\.shopee\.vn|shp\.ee|shope\.ee|vn\.shp\.ee|vn\.sh\.ee/.test(url)) {
       showError('Nhập link Shopee hợp lệ');
       return;
     }
