@@ -1,5 +1,5 @@
 /**
- * Frontend App - Shopee Affiliate Link Converter
+ * Frontend App - Shopee Affiliate Pro
  * Xử lý UI, Socket.IO, và API calls
  */
 
@@ -71,12 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!url.includes('shopee.vn') && !url.includes('s.shopee.vn')) {
-      showError('Please enter a valid Shopee URL');
+      showError('Vui lòng nhập link Shopee hợp lệ');
       return;
     }
 
     convertBtn.disabled = true;
-    convertBtn.textContent = 'Converting...';
+    convertBtn.innerHTML = `
+      <span class="flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Converting...
+      </span>
+    `;
 
     resetUI();
     updateStatus('waiting');
@@ -100,7 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       showError(error.message);
       convertBtn.disabled = false;
-      convertBtn.textContent = 'Convert';
+      convertBtn.innerHTML = `
+        <span class="flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          Convert Link
+        </span>
+      `;
     }
   };
 
@@ -124,10 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateStatus(status) {
     const statusMap = {
-      waiting: { color: 'bg-yellow-500', text: 'Waiting...', progress: '25%', show: true },
-      processing: { color: 'bg-blue-500', text: 'Processing...', progress: '60%', show: true },
-      completed: { color: 'bg-green-500', text: 'Completed', progress: '100%', show: false },
-      error: { color: 'bg-red-500', text: 'Error', progress: '100%', show: false },
+      waiting: { color: 'bg-yellow-500', text: 'Đang chờ xử lý...', progress: '25%', show: true },
+      processing: { color: 'bg-blue-500', text: 'Đang xử lý...', progress: '60%', show: true },
+      completed: { color: 'bg-green-500', text: 'Hoàn thành!', progress: '100%', show: false },
+      error: { color: 'bg-red-500', text: 'Lỗi', progress: '100%', show: false },
     };
     const s = statusMap[status];
     if (!s) return;
@@ -137,6 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
       statusIcon.classList.add('animate-pulse-dot');
     }
     statusText.textContent = s.text;
+    statusText.className = `text-sm font-medium ${
+      status === 'completed' ? 'text-green-400' :
+      status === 'error' ? 'text-red-400' : 'text-slate-400'
+    }`;
     progressBar.style.width = s.progress;
     loadingAnimation.classList.toggle('hidden', !s.show);
   }
@@ -147,7 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
     resultSection.classList.remove('hidden');
     errorSection.classList.add('hidden');
     convertBtn.disabled = false;
-    convertBtn.textContent = 'Convert';
+    convertBtn.innerHTML = `
+      <span class="flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Convert Link
+      </span>
+    `;
   }
 
   function showError(message) {
@@ -156,7 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
     resultSection.classList.add('hidden');
     loadingAnimation.classList.add('hidden');
     convertBtn.disabled = false;
-    convertBtn.textContent = 'Convert';
+    convertBtn.innerHTML = `
+      <span class="flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Convert Link
+      </span>
+    `;
   }
 
   function resetUI() {
@@ -165,8 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingAnimation.classList.add('hidden');
     toast.classList.add('hidden');
     progressBar.style.width = '0%';
-    statusIcon.className = 'w-3 h-3 rounded-full bg-gray-500';
+    statusIcon.className = 'w-3 h-3 rounded-full bg-slate-500';
     statusText.textContent = 'Waiting...';
+    statusText.className = 'text-sm font-medium text-slate-400';
   }
 
   function shakeInput() {
@@ -198,7 +232,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const reportNoData = document.getElementById('reportNoData');
 
     loadReportBtn.disabled = true;
-    loadReportBtn.textContent = 'Loading...';
+    loadReportBtn.innerHTML = `
+      <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Loading...
+    `;
     reportLoading.classList.remove('hidden');
     reportError.classList.add('hidden');
     reportStats.classList.add('hidden');
@@ -223,15 +263,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Show table
       if (data.orders && data.orders.length > 0) {
-        reportTableBody.innerHTML = data.orders.map(order => `
-          <tr class="bg-gray-800/30 hover:bg-gray-800/50 transition-colors">
-            <td class="px-4 py-3 font-medium text-white">${escapeHtml(order.orderId)}</td>
-            <td class="px-4 py-3 text-gray-300">${escapeHtml(order.orderTime)}</td>
-            <td class="px-4 py-3 text-gray-300">${escapeHtml(order.orderValue)}</td>
-            <td class="px-4 py-3 text-green-400 font-medium">${escapeHtml(order.commission)}</td>
-            <td class="px-4 py-3 text-gray-300 max-w-[200px] truncate">${escapeHtml(order.product)}</td>
-            <td class="px-4 py-3">
-              <span class="px-2 py-1 text-xs rounded-full ${getStatusClass(order.status)}">${escapeHtml(order.status)}</span>
+        reportTableBody.innerHTML = data.orders.map((order, index) => `
+          <tr class="border-b border-slate-800/30 hover:bg-slate-800/30 transition-colors">
+            <td class="px-4 py-4 font-mono text-sm text-white">${escapeHtml(order.orderId)}</td>
+            <td class="px-4 py-4 text-slate-300 text-sm">${escapeHtml(order.orderTime)}</td>
+            <td class="px-4 py-4 text-slate-300 text-sm font-medium">${escapeHtml(order.orderValue)}</td>
+            <td class="px-4 py-4 text-green-400 font-semibold text-sm">${escapeHtml(order.commission)}</td>
+            <td class="px-4 py-4 text-slate-300 text-sm max-w-[200px] truncate" title="${escapeHtml(order.product)}">${escapeHtml(order.product)}</td>
+            <td class="px-4 py-4">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${getStatusClass(order.status)}">
+                ${escapeHtml(order.status)}
+              </span>
             </td>
           </tr>
         `).join('');
@@ -244,12 +286,18 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('reportErrorText').textContent = error.message;
     } finally {
       loadReportBtn.disabled = false;
-      loadReportBtn.textContent = 'Load Report';
+      loadReportBtn.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Load Report
+      `;
       reportLoading.classList.add('hidden');
     }
   };
 
   function formatCurrency(value) {
+    if (value === 0 || isNaN(value)) return '0 ₫';
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
   }
 
@@ -261,20 +309,43 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getStatusClass(status) {
-    if (!status) return 'bg-gray-500/20 text-gray-400';
+    if (!status) return 'bg-slate-500/20 text-slate-400';
     const s = status.toLowerCase();
-    if (s.includes('hoàn thành') || s.includes('completed') || s.includes('success')) {
-      return 'bg-green-500/20 text-green-400';
-    } else if (s.includes('chờ') || s.includes('pending') || s.includes('processing')) {
-      return 'bg-yellow-500/20 text-yellow-400';
-    } else if (s.includes('hủy') || s.includes('cancel') || s.includes('failed')) {
-      return 'bg-red-500/20 text-red-400';
+    if (s.includes('hoàn thành') || s.includes('completed') || s.includes('success') || s.includes('đã thanh toán')) {
+      return 'bg-green-500/20 text-green-400 border border-green-500/30';
+    } else if (s.includes('chờ') || s.includes('pending') || s.includes('processing') || s.includes('đang xử lý')) {
+      return 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30';
+    } else if (s.includes('hủy') || s.includes('cancel') || s.includes('failed') || s.includes('thất bại')) {
+      return 'bg-red-500/20 text-red-400 border border-red-500/30';
     }
-    return 'bg-gray-500/20 text-gray-400';
+    return 'bg-slate-500/20 text-slate-400 border border-slate-500/30';
   }
 
   // ===========================
-  // Shake Animation (CSS-in-JS)
+  // Active Nav Highlight
+  // ===========================
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // ===========================
+  // Shake Animation
   // ===========================
   const style = document.createElement('style');
   style.textContent = `

@@ -1,4 +1,19 @@
-/* Loading Spinner Animation */
+/* ========================================
+   Shopee Affiliate Pro - Premium Styles
+   ======================================== */
+
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading Spinner */
 .spinner {
   display: inline-block;
   position: relative;
@@ -19,44 +34,58 @@
   border-top-color: #f97316;
 }
 
-.spinner div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-
-.spinner div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-
-.spinner div:nth-child(3) {
-  animation-delay: -0.15s;
-}
+.spinner div:nth-child(1) { animation-delay: -0.45s; }
+.spinner div:nth-child(2) { animation-delay: -0.3s; }
+.spinner div:nth-child(3) { animation-delay: -0.15s; }
 
 @keyframes spinner {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Pulse animation for status icon */
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .animate-pulse-dot {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(-10px) translateX(-10px); }
+  75% { transform: translateY(-30px) translateX(5px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(20px) translateX(-10px); }
+  50% { transform: translateY(10px) translateX(10px); }
+  75% { transform: translateY(30px) translateX(-5px); }
+}
+
+.animate-float {
+  animation: float 20s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 25s ease-in-out infinite;
+}
+
 /* Input focus glow */
 input:focus {
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+}
+
+/* Button disabled */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 /* Smooth transitions */
@@ -66,31 +95,146 @@ input:focus {
   transition-duration: 150ms;
 }
 
-/* Scrollbar styling */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: #1e293b;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 3px;
+  background: #475569;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: #64748b;
 }
 
-/* Button hover effect */
-#convertBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* Feature Card Hover */
+.feature-card {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Copy button animation */
-.copy-success {
-  background-color: rgb(34, 197, 94) !important;
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #f97316, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Stat Card Animation */
+.stat-card {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Partner Card */
+.partner-card {
+  transition: all 0.3s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px rgba(249, 115, 22, 0.15);
+}
+
+/* Nav Link Active */
+.nav-link.active {
+  background-color: rgba(249, 115, 22, 0.1);
+  color: #fb923c;
+}
+
+/* Table Row Hover */
+#reportTableBody tr {
+  transition: background-color 0.15s ease;
+}
+
+#reportTableBody tr:hover {
+  background-color: rgba(30, 41, 59, 0.5);
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .partner-card .flex.flex-col.sm\\:flex-row {
+    flex-direction: column;
+  }
+}
+
+/* Toast Animation */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#toast:not(.hidden) {
+  animation: slideUp 0.3s ease;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Card Glow Effect */
+.glow-orange {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
+}
+
+.glow-green {
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+}
+
+.glow-blue {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
 }
