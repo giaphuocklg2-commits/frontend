@@ -1,36 +1,135 @@
-/* ========================================
-   Shopee Affiliate Pro - Premium Styles
-   ======================================== */
+/* ═══ Shopee Affiliate Pro ═══ */
 
-/* Base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Card */
+.card {
+  background: rgba(15, 15, 25, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.2s ease;
 }
 
-html {
-  scroll-behavior: smooth;
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Loading Spinner */
+.inner-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s ease;
+}
+
+.inner-card:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Input */
+.input-field {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
+}
+
+/* Buttons */
+.btn-orange {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-orange:hover {
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-orange:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-violet {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-violet:hover {
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-violet:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Spinner */
 .spinner {
   display: inline-block;
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
 }
 
 .spinner div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 32px;
-  height: 32px;
-  margin: 4px;
-  border: 3px solid transparent;
+  width: 22px;
+  height: 22px;
+  margin: 3px;
+  border: 2px solid transparent;
   border-radius: 50%;
-  animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-top-color: #f97316;
 }
 
@@ -38,203 +137,40 @@ html {
 .spinner div:nth-child(2) { animation-delay: -0.3s; }
 .spinner div:nth-child(3) { animation-delay: -0.15s; }
 
-@keyframes spinner {
+@keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Pulse animation for status icon */
-@keyframes pulse {
+/* Pulse */
+@keyframes pulse-dot {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.animate-pulse-dot {
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-/* Float animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  25% { transform: translateY(-20px) translateX(10px); }
-  50% { transform: translateY(-10px) translateX(-10px); }
-  75% { transform: translateY(-30px) translateX(5px); }
-}
-
-@keyframes float-delayed {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  25% { transform: translateY(20px) translateX(-10px); }
-  50% { transform: translateY(10px) translateX(10px); }
-  75% { transform: translateY(30px) translateX(-5px); }
-}
-
-.animate-float {
-  animation: float 20s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float-delayed 25s ease-in-out infinite;
-}
-
-/* Input focus glow */
-input:focus {
-  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
-}
-
-/* Button disabled */
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
-/* Smooth transitions */
-* {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  50% { opacity: 0.4; }
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.12); }
 
-::-webkit-scrollbar-track {
-  background: #1e293b;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
-}
-
-/* Feature Card Hover */
-.feature-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #f97316, transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.feature-card:hover::before {
-  opacity: 1;
-}
-
-/* Stat Card Animation */
-.stat-card {
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Partner Card */
-.partner-card {
-  transition: all 0.3s ease;
-}
-
-.partner-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 25px 50px rgba(249, 115, 22, 0.15);
-}
-
-/* Nav Link Active */
-.nav-link.active {
-  background-color: rgba(249, 115, 22, 0.1);
-  color: #fb923c;
-}
-
-/* Table Row Hover */
+/* Table rows */
 #reportTableBody tr {
   transition: background-color 0.15s ease;
 }
 
 #reportTableBody tr:hover {
-  background-color: rgba(30, 41, 59, 0.5);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-/* Shimmer Effect */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* Shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
 }
 
-.loading-shimmer {
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-  .partner-card .flex.flex-col.sm\\:flex-row {
-    flex-direction: column;
-  }
-}
-
-/* Toast Animation */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#toast:not(.hidden) {
-  animation: slideUp 0.3s ease;
-}
-
-/* Status Badge */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-/* Card Glow Effect */
-.glow-orange {
-  box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
-}
-
-.glow-green {
-  box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
-}
-
-.glow-blue {
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+  border-color: rgba(239, 68, 68, 0.5) !important;
 }
