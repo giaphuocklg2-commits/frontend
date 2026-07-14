@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopee Affiliate Link Converter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-950 text-white min-h-screen flex flex-col items-center justify-center font-['Inter']">
+
+  <!-- Background gradient -->
+  <div class="fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 -z-10"></div>
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-3xl -z-10"></div>
+
+  <!-- Main Container -->
+  <div class="w-full max-w-2xl mx-auto px-4 py-10">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-2xl font-bold shadow-lg shadow-orange-500/25">
+          S
+        </div>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+        Shopee Affiliate Link Converter
+      </h1>
+      <p class="text-gray-400 mt-2 text-sm md:text-base">
+        Chuyển đổi link Shopee thành Affiliate Short Link
+      </p>
+    </div>
+
+    <!-- Input Card -->
+    <div class="bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+      <label for="urlInput" class="block text-sm font-medium text-gray-300 mb-3">
+        Nhập link Shopee
+      </label>
+      <div class="flex gap-3">
+        <input
+          type="url"
+          id="urlInput"
+          placeholder="https://shopee.vn/..."
+          class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+        />
+        <button
+          id="convertBtn"
+          onclick="convertLink()"
+          class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 active:scale-95 whitespace-nowrap"
+        >
+          Convert
+        </button>
+      </div>
+
+      <!-- Status Section -->
+      <div id="statusSection" class="mt-6 hidden">
+        <!-- Status Indicator -->
+        <div class="flex items-center gap-3 mb-4">
+          <div id="statusIcon" class="w-3 h-3 rounded-full bg-gray-500"></div>
+          <span id="statusText" class="text-sm font-medium text-gray-400">Waiting...</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-800 rounded-full h-1.5 mb-6 overflow-hidden">
+          <div id="progressBar" class="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+        </div>
+
+        <!-- Loading Animation -->
+        <div id="loadingAnimation" class="hidden flex justify-center py-4">
+          <div class="spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden">
+          <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+            <p class="text-xs text-gray-500 mb-1">Original URL</p>
+            <p id="originalUrl" class="text-sm text-gray-300 break-all mb-4"></p>
+
+            <div class="flex justify-center mb-4">
+              <svg class="w-5 h-5 text-orange-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </div>
+
+            <p class="text-xs text-gray-500 mb-1">Short URL</p>
+            <div class="flex items-center gap-2">
+              <p id="shortUrl" class="text-sm text-orange-400 font-medium break-all flex-1"></p>
+              <button
+                onclick="copyToClipboard()"
+                class="bg-gray-700 hover:bg-gray-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-all duration-200 active:scale-95 whitespace-nowrap"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Toast notification -->
+          <div id="toast" class="hidden mt-3 text-center text-xs text-green-400 font-medium">
+            Copied to clipboard!
+          </div>
+        </div>
+
+        <!-- Error Section -->
+        <div id="errorSection" class="hidden">
+          <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <p id="errorText" class="text-sm text-red-400"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <p class="text-center text-gray-600 text-xs mt-8">
+      Powered by Playwright Automation
+    </p>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
